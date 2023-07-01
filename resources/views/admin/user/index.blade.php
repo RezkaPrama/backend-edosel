@@ -46,8 +46,8 @@
                                             <tr>
                                                 <th class="text-center">No.</th>
                                                 <th class="text-center">User name</th>
+                                                <th class="text-center">NIK/NRP</th>
                                                 <th class="text-center">Email</th>
-                                                {{-- <th class="text-center">Password</th> --}}
                                                 <th class="text-center">User Role</th>
                                                 <th class="text-center">Cabang</th>
                                                 <th class="text-center">Profil Image</th>
@@ -59,8 +59,8 @@
                                             <tr>
                                                 <td class="text-center">{{ $item + 1 }}</td>
                                                 <td class="text-center">{{ $member->name }}</td>
+                                                <td class="text-center">{{ $member->nik }}</td>
                                                 <td class="text-center">{{ $member->email }}</td>
-                                                {{-- <td class="text-center" style="max-width: 100px;">{{ $member->password }}</td> --}}
                                                 <td class="text-center"><span class="badge bg-success font-size-12"><i class="mdi mdi-star me-1"></i>{{ $member->role }}</span></td>
                                                 <td class="text-center">{{ $member->cabang }}</td>
                                                 <td class="text-center">

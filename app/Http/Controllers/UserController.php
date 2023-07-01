@@ -42,9 +42,10 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name'          => 'required',
-            'email'         => 'required|email|unique:users',
+            'nik'           => 'required|unique:users,nik,message:NIK anda sudah terdaftar',
+            'email'         => 'required|unique:users,email,message:email anda sudah terdaftar',
             'password'      => 'required|confirmed',
-            'cabang'    => 'required',
+            'cabang'        => 'required',
             'role'          => 'required',
             // 'avatar'    => 'required|image|mimes:jpeg,jpg,png|max:2000',
         ]);
@@ -53,6 +54,7 @@ class UserController extends Controller
 
             $user = User::create([
                 'name'          => $request->input('name'),
+                'nik'           => $request->input('nik'),
                 'email'         => $request->input('email'),
                 'password'      => bcrypt($request->input('password')),
                 'cabang'        => $request->input('cabang'),
@@ -69,6 +71,7 @@ class UserController extends Controller
 
             $user = User::create([
                 'name'          => $request->input('name'),
+                'nik'           => $request->input('nik'),
                 'email'         => $request->input('email'),
                 'password'      => bcrypt($request->input('password')),
                 'cabang'        => $request->input('cabang'),
@@ -120,7 +123,8 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name'          => 'required',
-            'email'         => 'required|email',
+            'nik'           => 'required',
+            'email'         => 'required',
             'password'      => 'required|confirmed',
             'cabang'        => 'required',
             'role'          => 'required',
@@ -132,6 +136,7 @@ class UserController extends Controller
             $user = User::findOrFail($user->id);
             $user->update([
                 'name'          => $request->input('name'),
+                'nik'           => $request->input('nik'),
                 'email'         => $request->input('email'),
                 'password'      => bcrypt($request->input('password')),
                 'cabang'        => $request->input('cabang'),
@@ -148,6 +153,7 @@ class UserController extends Controller
             $user = User::findOrFail($user->id);
             $user->update([
                 'name'      => $request->input('name'),
+                'nik'       => $request->input('nik'),
                 'email'     => $request->input('email'),
                 'password'  => bcrypt($request->input('password')),
                 'cabang'    => $request->input('cabang'),

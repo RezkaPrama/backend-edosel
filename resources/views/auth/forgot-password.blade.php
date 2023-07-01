@@ -12,10 +12,8 @@
                 <div class="col-md-8 col-lg-6 col-xl-5">
 
                     <div class="text-center mb-4">
-                        <a href="index">
-                            <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22"> <span
-                                class="logo-txt">E-Dosel</span>
-                        </a>
+                        <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22"> <span
+                            class="logo-txt">E-Dosel</span>
                     </div>
 
                     <div class="card">

@@ -12,9 +12,8 @@
                 <div class="col-md-8 col-lg-6 col-xl-5">
 
                     <div class="text-center mb-4">
-                        <a href="index">
-                            <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22"> <span class="logo-txt">E-Dosel</span>
-                        </a>
+                        <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22"> <span
+                            class="logo-txt">E-Dosel</span>
                     </div>
 
                     <div class="card">
@@ -34,12 +33,13 @@
                                     @csrf
 
                                     <div class="mb-3">
-                                        <label class="form-label" for="username">Email</label>
-                                        <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" id="username"  placeholder="Enter Email" autocomplete="email" autofocus>
-                                        {{-- <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" id="username"  placeholder="Enter Email" autocomplete="email" autofocus> --}}
+                                        <label class="form-label" for="username">Email atau NIK </label>
+                                        <input type="text" name="email" value="{{ old('email') }}"
+                                            class="form-control @error('email') is-invalid @enderror" id="email"
+                                            placeholder="Enter email">
                                         @error('email')
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>Kolom Email harus terisi!</strong>
+                                            <strong>{{ $message }}</strong>
                                         </span>
                                         @enderror
                                     </div>
@@ -53,8 +53,14 @@
                                             @endif
                                         </div>
                                         <label class="form-label" for="userpassword">Password</label>
-                                        <input type="password" name="password" class="form-control  @error('password') is-invalid @enderror" id="userpassword" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
-                                        {{-- <input type="password" name="password" class="form-control  @error('password') is-invalid @enderror" id="userpassword" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon"> --}}
+                                        <input type="password" name="password"
+                                            class="form-control  @error('password') is-invalid @enderror"
+                                            id="userpassword" placeholder="Enter password" aria-label="Password"
+                                            aria-describedby="password-addon">
+                                        {{-- <input type="password" name="password"
+                                            class="form-control  @error('password') is-invalid @enderror"
+                                            id="userpassword" placeholder="Enter password" aria-label="Password"
+                                            aria-describedby="password-addon"> --}}
                                         @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>Kolom Password harus terisi!</strong>
@@ -63,7 +69,8 @@
                                     </div>
 
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                        <input class="form-check-input" type="checkbox" id="remember" {{ old('remember')
+                                            ? 'checked' : '' }}>
                                         <label class="form-check-label" for="remember"> Ingat Saya </label>
                                     </div>
 
