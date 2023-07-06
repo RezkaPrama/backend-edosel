@@ -34,16 +34,18 @@ Route::prefix('admin')->group(function () {
 
         //route User
         Route::resource('/user', UserController::class, ['as' => 'admin']);
-        // Route::get('/user/{userId}', [UserController::class, 'showImage'])->name('admin.user.showImage');
+        Route::get('/user/export', [UserController::class, 'export'])->name('admin.user.export');
 
         //route Rak
         Route::resource('/shelf', ShelfController::class, ['as' => 'admin']);
 
         //route Input Dokumen
         Route::resource('/dokumen', InputDokumenController::class, ['as' => 'admin']);
+        Route::get('/dokumen/export/', [InputDokumenController::class, 'export'])->name('admin.dokumen.export');
 
         //route Input Dokumen
         Route::post('/inputDokumenDetail/upload', [InputDokumenDetailController::class, 'upload'])->name('admin.dokumenDetail.upload');
+        Route::post('/inputDokumenDetail/uploadCreate', [InputDokumenDetailController::class, 'uploadCreate'])->name('admin.dokumenDetail.uploadCreate');
         Route::get('/inputDokumenDetail/{userid}/{filename}/download', [InputDokumenDetailController::class, 'download'])->name('admin.dokumenDetail.download');
         Route::get('/inputDokumenDetail/{userid}/{filename}/previewPdf', [InputDokumenDetailController::class, 'previewPdf'])->name('admin.dokumenDetail.previewPdf');
         Route::get('/inputDokumenDetail/{id}/{userid}/destroy', [InputDokumenDetailController::class, 'destroy'])->name('admin.dokumenDetail.destroy');

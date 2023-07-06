@@ -87,12 +87,12 @@ class InputDokumenDetailController extends Controller
 
         $dokumenDetail = InputDokumenDetail::findOrFail($id);
         // $image = Storage::disk('local')->delete('public/documents/'.basename($fileUsulanDetail->nama_file));
-        $image = Storage::disk('local')->delete($filePath.basename($dokumenDetail->nama_file));
+        $image = Storage::disk('local')->delete($filePath . basename($dokumenDetail->nama_file));
         $dokumenDetail->delete();
 
-        if($dokumenDetail){
+        if ($dokumenDetail) {
             return redirect()->back()->with(['success' => 'Data Berhasil Dihapus!']);
-        }else{
+        } else {
             return redirect()->back()->with(['error' => 'Data Gagal Dihapus!']);
         }
     }
@@ -108,7 +108,17 @@ class InputDokumenDetailController extends Controller
         if ($request->file('file') !== null) {
 
             // $request->validate([
-            //     'file'              => 'required|file|max:2000',
+            //     'file' => [
+            //         'required',
+            //         'mimes:xls,xlsx',
+            //         'max:2048',
+            //         function ($attribute, $value, $fail) {
+            //             $extension = $value->getClientOriginalExtension();
+            //             if (!in_array($extension, ['xls', 'xlsx'])) {
+            //                 $fail($attribute . ' Salah data. hanya file excel yang diijinkan.');
+            //             }
+            //         },
+            //     ],
             // ]);
 
             $userid = $request->input('users_id');
@@ -145,21 +155,64 @@ class InputDokumenDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function uploadCreate(Request $request)
+    {
+
+        if ($request->file('file') !== null) {
+            $file = $request->file('file');
+            $userid = $request->input('user_id');
+            $lastId = $request->input('lastId');
+    
+            // $filename = $file->getClientOriginalName();
+            $filename = $file->hashName();
+    
+            $destinationPath = 'public/uploads'; // your desired destination path
+    
+            $filePath = $destinationPath . '/' . $userid . '/';
+    
+            $file->storeAs($filePath, $filename);
+
+            $dokumenDetail = InputDokumenDetail::create([
+                'input_dokumen_id'          => $lastId,
+                'users_id'                  => $userid,
+                'nama_file'                 => $filename
+            ]);
+
+            $dokumenDetail->save();
+    
+            return response()->json([
+                'result' => 'success',
+                // 'filename' => $lastId,
+                // 'totalFiles' => $totalFiles
+                ]);
+        } else {
+            return response()->json([
+                'result' => 'error'
+            ]);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function download($userid, $filename)
     {
-         // $filePath = 'public/documents/' . $filename; // Replace with the actual directory path
+        // $filePath = 'public/documents/' . $filename; // Replace with the actual directory path
 
-         $directory = 'public/uploads/';
-         $subPath = $directory . '/' . $userid . '/';
- 
-         $filePath = $subPath . $filename; // Replace with the actual directory path
- 
-         if (Storage::exists($filePath)) {
-             return Storage::download($filePath);
-         }
- 
-         // Handle case when the file doesn't exist
-         abort(404, 'File Tidak ditemukan');
+        $directory = 'public/uploads/';
+        $subPath = $directory . '/' . $userid . '/';
+
+        $filePath = $subPath . $filename; // Replace with the actual directory path
+
+        if (Storage::exists($filePath)) {
+            return Storage::download($filePath);
+        }
+
+        // Handle case when the file doesn't exist
+        abort(404, 'File Tidak ditemukan');
     }
 
     /**

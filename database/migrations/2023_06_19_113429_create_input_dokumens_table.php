@@ -18,7 +18,8 @@ class CreateInputDokumensTable extends Migration
             $table->bigInteger('nik');
             $table->string('nama');
             $table->date('tanggal_input');
-            $table->string('jabatan');
+            $table->string('pangkat');
+            $table->string('satuan');
             $table->string('jenis_karyawan');
             $table->bigInteger('shelf_id')->unsigned();
             $table->timestamps();

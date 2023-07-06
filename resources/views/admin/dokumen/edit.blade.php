@@ -3,7 +3,8 @@
 
 @section('css')
 <link href="{{ URL::asset('assets/libs/choices.js/choices.js.min.css') }}" rel="stylesheet" type="text/css" />
-{{-- <link href="{{ URL::asset('assets/libs/dropzone/dropzone.min.css') }}" rel="stylesheet" type="text/css" /> --}}
+{{--
+<link href="{{ URL::asset('assets/libs/dropzone/dropzone.min.css') }}" rel="stylesheet" type="text/css" /> --}}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.css" />
 {{--
 <link rel="stylesheet" href="{{ URL::asset('assets/libs/gridjs/gridjs.min.css') }}"> --}}
@@ -49,20 +50,7 @@
                             @method('PUT')
 
                             <div class="mb-3">
-                                <label class="form-label" for="nik">NIK/NRP</label>
-                                <input id="nik" name="nik" placeholder="Masukan NIK" type="text"
-                                    value="{{ old('dokumen', $dokumen->nik) }}"
-                                    class="form-control @error('nik') is-invalid @enderror">
-
-                                @error('nik')
-                                <div class="invalid-feedback" style="display: block">
-                                    NIK/NRP harus terisi
-                                </div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="nama">Nama Lengkap</label>
+                                <label class="form-label" for="nama">Nama</label>
                                 <input id="nama" name="nama" placeholder="Masukan Nama Lengkap" type="text"
                                     value="{{ old('dokumen', $dokumen->nama) }}"
                                     class="form-control @error('nama') is-invalid @enderror">
@@ -74,87 +62,133 @@
                                 @enderror
                             </div>
 
-                            <div class="row">
-                                <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="pangkat"> Pangkat</label>
+                                <select class="form-control @error('pangkat') is-invalid @enderror" data-trigger
+                                    name="pangkat" id="pangkat">
+                                    <option value="">Pilih Pangkat</option>
+                                    <option value="Mayjen" {{ $dokumen->pangkat == 'Mayjen' ? 'selected' : '' }}>Mayjen</option>
+                                    <option value="Brigjen" {{ $dokumen->pangkat == 'Brigjen' ? 'selected' : '' }}>Brigjen</option>
+                                    <option value="Kolonel" {{ $dokumen->pangkat == 'Kolonel' ? 'selected' : '' }}>Kolonel</option>
+                                    <option value="Letkol" {{ $dokumen->pangkat == 'Letkol' ? 'selected' : '' }}>Letkol</option>
+                                    <option value="Mayor" {{ $dokumen->pangkat == 'Mayor' ? 'selected' : '' }}>Mayor</option>
+                                    <option value="Kapten" {{ $dokumen->pangkat == 'Kapten' ? 'selected' : '' }}>Kapten</option>
+                                    <option value="Lettu" {{ $dokumen->pangkat == 'Lettu' ? 'selected' : '' }}>Lettu</option>
+                                    <option value="Letda" {{ $dokumen->pangkat == 'Letda' ? 'selected' : '' }}>Letda</option>
+                                    <option value="Peltu" {{ $dokumen->pangkat == 'Peltu' ? 'selected' : '' }}>Peltu</option>
+                                    <option value="Pelda" {{ $dokumen->pangkat == 'Pelda' ? 'selected' : '' }}>Pelda</option>
+                                    <option value="Serma" {{ $dokumen->pangkat == 'Serma' ? 'selected' : '' }}>Serma</option>
+                                    <option value="Serka" {{ $dokumen->pangkat == 'Serka' ? 'selected' : '' }}>Serka</option>
+                                    <option value="Sertu" {{ $dokumen->pangkat == 'Sertu' ? 'selected' : '' }}>Sertu</option>
+                                    <option value="Kopka" {{ $dokumen->pangkat == 'Kopka' ? 'selected' : '' }}>Kopka</option>
+                                    <option value="Koptu" {{ $dokumen->pangkat == 'Koptu' ? 'selected' : '' }}>Koptu</option>
+                                    <option value="Kopda" {{ $dokumen->pangkat == 'Kopda' ? 'selected' : '' }}>Kopda</option>
+                                    <option value="Praka" {{ $dokumen->pangkat == 'Praka' ? 'selected' : '' }}>Praka</option>
+                                    <option value="Pratu" {{ $dokumen->pangkat == 'Pratu' ? 'selected' : '' }}>Pratu</option>
+                                    <option value="Prada" {{ $dokumen->pangkat == 'Prada' ? 'selected' : '' }}>Prada</option>
+                                </select>
 
-                                    <div class="mb-3">
-
-                                        <label class="form-label" for="tanggal_input"> Tanggal Input</label>
-                                        <input id="tanggal_input" name="tanggal_input" placeholder="Masukan Nama Satuan"
-                                            type="text" value="{{ old('dokumen', $dokumen->tanggal_input) }}"
-                                            class="form-control flatpickr-input @error('tanggal_input') is-invalid @enderror">
-
-                                        @error('tanggal_input')
-                                        <div class="invalid-feedback" style="display: block">
-                                            tanggal harus terisi
-                                        </div>
-                                        @enderror
-
-                                    </div>
+                                @error('pangkat')
+                                <div class="invalid-feedback" style="display: block">
+                                    Jabatan harus terisi
                                 </div>
+                                @enderror
+                            </div>
 
-                                <div class="col-lg-3">
-                                    <div class="mb-3">
-                                        <label class="form-label" for="jabatan"> jabatan</label>
-                                        <input id="jabatan" name="jabatan" placeholder="Masukan jabatan" type="text"
-                                            value="{{ old('dokumen', $dokumen->jabatan) }}"
-                                            class="form-control @error('jabatan') is-invalid @enderror">
+                            <div class="mb-3">
+                                <label class="form-label" for="nik">NIP/NRP</label>
+                                <input id="nik" name="nik" placeholder="Masukan NIK" type="text"
+                                    value="{{ old('dokumen', $dokumen->nik) }}"
+                                    class="form-control @error('nik') is-invalid @enderror">
 
-                                        @error('jabatan')
-                                        <div class="invalid-feedback" style="display: block">
-                                            Jabatan harus terisi
-                                        </div>
-                                        @enderror
-                                    </div>
+                                @error('nik')
+                                <div class="invalid-feedback" style="display: block">
+                                    NIP/NRP harus terisi
                                 </div>
+                                @enderror
+                            </div>
 
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <label for="choices-single-default" class="form-label">No Rak</label>
-                                        <select class="form-control @error('shelf_id') is-invalid @enderror"
-                                            data-trigger id="shelf_id" name="shelf_id">
-                                            <option value="">Pilih Rak</option>
-                                            @foreach ($shelf as $item)
-                                            @if($dokumen->shelf_id == $item->id)
-                                            <option value="{{ $item->id  }}" selected>{{ $item->no_rak }} - {{
-                                                $item->nama_rak }}</option>
-                                            @else
-                                            <option value="{{ $item->id  }}">{{ $item->no_rak }} - {{ $item->nama_rak }}
-                                            </option>
-                                            @endif
-                                            @endforeach
-                                        </select>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="choices-single-default" class="form-label">No Rak</label>
+                                    <select class="form-control @error('shelf_id') is-invalid @enderror" data-trigger
+                                        id="shelf_id" name="shelf_id">
+                                        <option value="">Pilih Rak</option>
+                                        @foreach ($shelf as $item)
+                                        @if($dokumen->shelf_id == $item->id)
+                                        <option value="{{ $item->id  }}" selected>{{ $item->no_rak }} - {{
+                                            $item->nama_rak }}</option>
+                                        @else
+                                        <option value="{{ $item->id  }}">{{ $item->no_rak }} - {{ $item->nama_rak }}
+                                        </option>
+                                        @endif
+                                        @endforeach
+                                    </select>
 
-                                        @error('shelf_id')
-                                        <div class="invalid-feedback" style="display: block">
-                                            No rak harus terisi
-                                        </div>
-                                        @enderror
+                                    @error('shelf_id')
+                                    <div class="invalid-feedback" style="display: block">
+                                        No rak harus terisi
                                     </div>
+                                    @enderror
                                 </div>
+                            </div>
 
-                                <div class="col-md-8">
-                                    <div class="mb-3">
+                            <div class="col-lg-12">
 
-                                        <label for="choices-single-specifications" class="form-label">Jenis
-                                            Karyawan</label>
-                                        <select class="form-control @error('jenis_karyawan') is-invalid @enderror"
-                                            data-trigger name="jenis_karyawan" id="jenis_karyawan">
-                                            <option value="">Pilih jenis Karyawan</option>
-                                            <option value="tetap" {{ $dokumen->jenis_karyawan == 'tetap' ? 'selected' :
-                                                '' }}>Tetap</option>
-                                            <option value="kontrak" {{ $dokumen->jenis_karyawan == 'kontrak' ?
-                                                'selected' : '' }}>Kontrak</option>
-                                        </select>
+                                <div class="mb-3">
 
-                                        @error('jenis_karyawan')
-                                        <div class="invalid-feedback" style="display: block">
-                                            Jenis Karyawan harus terisi
-                                        </div>
-                                        @enderror
+                                    <label class="form-label" for="tanggal_input"> Tanggal Input</label>
+                                    <input id="tanggal_input" name="tanggal_input" placeholder="Masukan Nama Satuan"
+                                        type="text" value="{{ old('dokumen', $dokumen->tanggal_input) }}"
+                                        class="form-control flatpickr-input @error('tanggal_input') is-invalid @enderror">
+
+                                    @error('tanggal_input')
+                                    <div class="invalid-feedback" style="display: block">
+                                        tanggal harus terisi
                                     </div>
-                                </div>
+                                    @enderror
 
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="choices-single-specifications" class="form-label">Jenis
+                                        Karyawan</label>
+                                    <select class="form-control @error('jenis_karyawan') is-invalid @enderror"
+                                        data-trigger name="jenis_karyawan" id="jenis_karyawan">
+                                        <option value="">Pilih jenis Karyawan</option>
+                                        <option value="Militer" {{ $dokumen->jenis_karyawan == 'Militer' ? 'selected' : '' }}>Militer</option>
+                                        <option value="PNS" {{ $dokumen->jenis_karyawan == 'PNS' ? 'selected' : '' }}>PNS</option>
+                                    </select>
+
+                                    @error('jenis_karyawan')
+                                    <div class="invalid-feedback" style="display: block">
+                                        Jenis Karyawan harus terisi
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="satuan"> Satuan</label>
+                                <select class="form-control @error('satuan') is-invalid @enderror" data-trigger
+                                    name="satuan" id="satuan">
+                                    <option value="">Pilih Satuan</option>
+                                    <option value="Mako Denma Kopassus" {{ $dokumen->satuan == 'Mako Denma Kopassus' ? 'selected' : '' }}>Mako Denma Kopassus</option>
+                                    <option value="Pusdiklatpasus Kopassus" {{ $dokumen->satuan == 'Pusdiklatpasus Kopassus' ? 'selected' : '' }}>Pusdiklatpasus Kopassus</option>
+                                    <option value="Group 1 Kopassus" {{ $dokumen->satuan == 'Group 1 Kopassus' ? 'selected' : '' }}>Group 1 Kopassus</option>
+                                    <option value="Group 2 Kopassus" {{ $dokumen->satuan == 'Group 2 Kopassus' ? 'selected' : '' }}>Group 2 Kopassus</option>
+                                    <option value="Group 3 Kopassus" {{ $dokumen->satuan == 'Group 3 Kopassus' ? 'selected' : '' }}>Group 3 Kopassus</option>
+                                    <option value="Satuan 81 Kopassus" {{ $dokumen->satuan == 'Satuan 81 Kopassus' ? 'selected' : '' }}>Satuan 81 Kopassus</option>
+                                    <option value="PNS Kopassus" {{ $dokumen->satuan == 'PNS Kopassus' ? 'selected' : '' }}>PNS Kopassus</option>
+                                </select>
+
+                                @error('satuan')
+                                <div class="invalid-feedback" style="display: block">
+                                    Jenis Karyawan harus terisi
+                                </div>
+                                @enderror
                             </div>
 
                             <div class="row mb-4">
@@ -193,8 +227,9 @@
                         </div>
                     </div>
                 </a>
-                
-                <div id="fileDokumen-dokumeninfo-collapse" class="collapse show" data-bs-parent="#fileDokumen-accordion">
+
+                <div id="fileDokumen-dokumeninfo-collapse" class="collapse show"
+                    data-bs-parent="#fileDokumen-accordion">
                     <div class="p-4 border-top">
                         <div class="table-responsive">
                             <table class="table align-middle table-nowrap table-centered mb-0">
@@ -206,18 +241,21 @@
                                     </tr>
                                 </thead><!-- end thead -->
                                 <tbody>
-    
+
                                     @forelse ($dokumenDetail as $item => $row)
                                     <tr>
                                         <td class="text-center">{{$item + 1}}</td>
                                         <td class="text-center">{{$row->nama_file}}</td>
                                         <td class="text-center">
                                             <a href="{{ route('admin.dokumenDetail.download', ['userid' => auth()->user()->id, 'filename' => $row->nama_file ]) }}"
-                                                class="btn btn-primary w-sm"><i class="bx bx-download me-2"></i>Download</a>
+                                                class="btn btn-primary w-sm"><i
+                                                    class="bx bx-download me-2"></i>Download</a>
                                             <a href="{{ route('admin.dokumenDetail.previewPdf', ['userid' => auth()->user()->id, 'filename' => $row->nama_file ]) }}"
-                                                class="btn btn-dark w-sm"><i class="bx bxs-file-pdf me-2"></i>Preview</a>
+                                                class="btn btn-dark w-sm"><i
+                                                    class="bx bxs-file-pdf me-2"></i>Preview</a>
                                             <a href="{{ route('admin.dokumenDetail.destroy', ['id' => $row->id, 'userid' => auth()->user()->id ]) }}"
-                                                class="btn btn-danger w-sm"><i class="bx bxs-eraser-pdf me-2"></i>Hapus</a>
+                                                class="btn btn-danger w-sm"><i
+                                                    class="bx bxs-eraser-pdf me-2"></i>Hapus</a>
                                         </td>
                                     </tr>
                                     @empty
@@ -226,7 +264,7 @@
                                     </div>
                                     @endforelse
                                     <!-- end tr -->
-    
+
                                 </tbody><!-- end tbody -->
                             </table><!-- end table -->
                         </div>
@@ -258,31 +296,36 @@
                     </div>
                 </a>
 
-                <div id="uploadDokumen-dokumeninfo-collapse" class="collapse show" data-bs-parent="#uploadDokumen-accordion">
+                <div id="uploadDokumen-dokumeninfo-collapse" class="collapse show"
+                    data-bs-parent="#uploadDokumen-accordion">
                     <div class="p-4 border-top">
                         <div>
-                            <form action="#" class="dropzone" method="POST" id="my-dropzone" enctype="multipart/form-data">
+                            <form action="#" class="dropzone" method="POST" id="my-dropzone"
+                                enctype="multipart/form-data">
                                 @csrf
 
                                 <div class="fallback">
                                     <input name="file" type="file" multiple="multiple">
                                 </div>
 
-                                <input id="input_dokumens_id" name="input_dokumens_id" type="hidden" value="{{ $dokumen->id }}" class="form-control">
-                                <input id="users_id" name="users_id" type="hidden" value="{{ auth()->user()->id }}" class="form-control">
+                                <input id="input_dokumens_id" name="input_dokumens_id" type="hidden"
+                                    value="{{ $dokumen->id }}" class="form-control">
+                                <input id="users_id" name="users_id" type="hidden" value="{{ auth()->user()->id }}"
+                                    class="form-control">
 
                                 <div class="dz-message needsclick">
                                     <div class="mb-3">
                                         <i class="display-4 text-muted mdi mdi-cloud-upload"></i>
                                     </div>
-                                    
+
                                     <h4>Drop file disini atau klik untuk upload.</h4>
                                 </div>
                             </form>
                         </div>
 
                         <div class="text-center mt-4">
-                            <button type="button" id="submit-all" class="btn btn-primary waves-effect waves-light"><i class="fa fa-paper-plane"></i> Upload File</button>
+                            <button type="button" id="submit-all" class="btn btn-primary waves-effect waves-light"><i
+                                    class="fa fa-paper-plane"></i> Upload File</button>
                         </div>
                     </div>
                 </div>
@@ -353,7 +396,7 @@
     
 </script>
 <script>
-   // Step 1: Initialize Dropzone.js
+    // Step 1: Initialize Dropzone.js
   Dropzone.autoDiscover = false;
   var myDropzone = new Dropzone("#my-dropzone", {
     url: "{{ route('admin.dokumenDetail.upload') }}",
