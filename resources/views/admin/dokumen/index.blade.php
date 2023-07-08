@@ -30,6 +30,10 @@
                         </div>
                     </div>
 
+                    {{-- <label class="col-sm-2 col-form-label">user id</label> --}}
+                    <input id="userid" name="userid" type="hidden" value="{{auth()->user()->id}}"
+                    class="form-control ">
+
                     <div class="mb-3 row">
                         <label for="horizontal-firstname-input" class="col-sm-2 col-form-label">Nama</label>
                         <div class="col-sm-4">
@@ -54,14 +58,14 @@
                         <button type="submit" class="btn btn-success mb-4 col-sm-2 me-1"><i
                                 class="mdi mdi-filter me-1"></i>
                             Filter</button>
-                        <a href="{{ route('admin.dokumen.export') }}" type="button" class="btn btn-success mb-4 col-sm-2 "><i
+                        <a id="export-excel" class="btn btn-success mb-4 col-sm-2 "><i
                                 class="mdi mdi-microsoft-excel me-1"></i>
                             Export</a>
                     </div>
 
                     <div class="text-end">
-                        <a href="{{ route('admin.dokumen.create') }}" type="button"
-                                    class="btn btn-success mb-4"><i class="mdi mdi-plus me-1"></i> Tambah Dokumen</a>
+                        <a href="{{ route('admin.dokumen.create') }}" type="button" class="btn btn-success mb-4"><i
+                                class="mdi mdi-plus me-1"></i> Tambah Dokumen</a>
                     </div>
                 </form>
             </div>
@@ -72,7 +76,7 @@
                     <div class="modal-button mt-2">
                         <div class="row align-items-start">
                             <div class="col-sm">
-                                
+
                             </div>
                         </div>
                         <!-- end row -->
@@ -168,6 +172,35 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
+
+        document.getElementById('export-excel').addEventListener('click', function() {
+
+            var urlParams = new URLSearchParams(window.location.search);
+            console.log(urlParams.get('nik'));
+            
+            if (urlParams.has('nik') || urlParams.has('nama') || urlParams.has('no_rak') ) {
+                
+                const param = document.getElementById('userid').value;
+                var nik = urlParams.get('nik');
+                var nama = urlParams.get('nama');
+                var no_rak = urlParams.get('no_rak');
+
+                var data = {
+                    userid: param,
+                    nik: nik,
+                    nama: nama,
+                    no_rak: no_rak,
+                };
+
+                window.location.href = `{{ route("admin.dokumen.exportExcel", "") }}/${param}`;
+
+            } else {
+                
+                const param = document.getElementById('userid').value;
+                window.location.href = `{{ route("admin.dokumen.exportExcel", "") }}/${param}`;
+                
+            }
+    });
         
         // Swal.fire("Hello, SweetAlert!");
 

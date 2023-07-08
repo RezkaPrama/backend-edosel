@@ -9,6 +9,7 @@ use App\Models\Shelf;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\Console\Input\Input;
 
 class InputDokumenController extends Controller
 {
@@ -177,20 +178,32 @@ class InputDokumenController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * filter export the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function export()
-    {
 
-        // Generate the Excel file
-        $filePath = Excel::store(new InputDokumenExport, 'export.xlsx', 'public');
-
-        // Download the file
-        return response()->download($filePath, 'export.xlsx', [
-            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        ]);
-    }
+     public function exportExcel(Request $request, $userid)
+     {
+         $nik = $request->input('nik');
+         $nama = $request->input('nama');
+         $no_rak = $request->input('no_rak');
+ 
+         $query = InputDokumen::query();
+ 
+         if ($nik != null) {
+             $query->where('nik', $nik);
+         }
+         if ($nama != null) {
+             $query->where('nama', $nama);
+         }
+         if ($no_rak != null) {
+             $query->where('shelf_id', $no_rak);
+         }
+ 
+         $results = $query->get();
+ 
+         return Excel::download(new InputDokumenExport($results), 'Dokumen.xlsx');
+     }
 }
