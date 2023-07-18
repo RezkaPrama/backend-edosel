@@ -121,7 +121,6 @@ class ShelfController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
         $shelf = Shelf::findOrFail($id);
         $shelf->delete();
 

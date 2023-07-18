@@ -63,6 +63,18 @@
                                     </div>
                                     <div>
                                         <div class="mb-3">
+                                            <label class="form-label" for="no_dosir">No Dosir</label>
+                                            <input id="no_dosir" name="no_dosir" placeholder="Masukan No Dosir" type="text"
+                                                class="form-control @error('no_dosir') is-invalid @enderror">
+
+                                            @error('no_dosir')
+                                            <div class="invalid-feedback" style="display: block">
+                                                No Dosir harus terisi
+                                            </div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="mb-3">
                                             <label class="form-label" for="nama">Nama</label>
                                             <input id="nama" name="nama" placeholder="Masukan Nama Lengkap" type="text"
                                                 class="form-control @error('nama') is-invalid @enderror">
@@ -161,17 +173,16 @@
 
                                         <div class="col-md-12">
                                             <div class="mb-3">
-                                                <label for="choices-single-specifications" class="form-label">Jenis
-                                                    Karyawan</label>
+                                                <label for="choices-single-specifications" class="form-label">Personel</label>
                                                 <select
-                                                    class="form-control @error('jenis_karyawan') is-invalid @enderror"
-                                                    data-trigger name="jenis_karyawan" id="jenis_karyawan">
-                                                    <option value="">Pilih jenis Karyawan</option>
+                                                    class="form-control @error('personel') is-invalid @enderror"
+                                                    data-trigger name="personel" id="personel">
+                                                    <option value="">Pilih Personel</option>
                                                     <option value="Militer">Militer</option>
                                                     <option value="PNS">PNS</option>
                                                 </select>
 
-                                                @error('jenis_karyawan')
+                                                @error('personel')
                                                 <div class="invalid-feedback" style="display: block">
                                                     Jenis Karyawan harus terisi
                                                 </div>

@@ -46,7 +46,7 @@
                                             <tr>
                                                 <th class="text-center">No.</th>
                                                 <th class="text-center">User name</th>
-                                                <th class="text-center">NIK/NRP</th>
+                                                <th class="text-center">NRP/NIP</th>
                                                 <th class="text-center">Email</th>
                                                 <th class="text-center">User Role</th>
                                                 <th class="text-center">Cabang</th>
@@ -73,7 +73,12 @@
                                                             <i class="bx bx-dots-horizontal-rounded"></i>
                                                         </a>
                                                         <ul class="dropdown-menu dropdown-menu-end">
-                                                            <li><a class="dropdown-item" href="{{ route('admin.user.edit', $member->id) }}">Edit User</a></li>
+                                                            <li class="text-center" style="margin-bottom: 6px; border-bottom: 2px;">
+                                                                <a class="dropdown-item " href="{{ route('admin.user.edit', $member->id) }}">Edit User</a>
+                                                            </li>
+                                                            <li class="text-center">
+                                                                <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $member->id }}">Hapus User</button>
+                                                            </li>
                                                         </ul>
                                                     </div>
                                                 </td>
@@ -109,6 +114,55 @@
 
 <script src="{{ asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    
+    $(document).on('click', '.btn-delete', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Anda yakin ingin menghapus data ini?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                
+                $.ajax({
+                    url: '/admin/user/' + id, 
+                    type: 'DELETE',
+                    dataType: 'json',
+                    data: {
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    success: function (data) {
+                        
+                        Swal.fire(
+                            'Sukses!',
+                            'Data berhasil dihapus.',
+                            'success'
+                        ).then(() => {
+                            
+                            window.location.reload();
+                        });
+                    },
+                    error: function (data) {
+                        
+                        Swal.fire(
+                            'Error!',
+                            'Terjadi kesalahan saat menghapus data.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    });
+</script>
 <script>
     $(document).ready(function() {
         

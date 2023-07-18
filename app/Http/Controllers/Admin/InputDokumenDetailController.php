@@ -107,20 +107,6 @@ class InputDokumenDetailController extends Controller
     {
         if ($request->file('file') !== null) {
 
-            // $request->validate([
-            //     'file' => [
-            //         'required',
-            //         'mimes:xls,xlsx',
-            //         'max:2048',
-            //         function ($attribute, $value, $fail) {
-            //             $extension = $value->getClientOriginalExtension();
-            //             if (!in_array($extension, ['xls', 'xlsx'])) {
-            //                 $fail($attribute . ' Salah data. hanya file excel yang diijinkan.');
-            //             }
-            //         },
-            //     ],
-            // ]);
-
             $userid = $request->input('users_id');
             $file = $request->file('file');
             $filename = $file->getClientOriginalName();

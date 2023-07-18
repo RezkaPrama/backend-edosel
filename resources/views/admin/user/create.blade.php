@@ -52,7 +52,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label" for="nik">NIK/NRP</label>
+                                <label class="form-label" for="nik">NRP/NIP</label>
                                 <input id="nik" name="nik" placeholder="Masukan NIK atau NRP" type="text"
                                     class="form-control @error('nik') is-invalid @enderror">
 

@@ -55,7 +55,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label" for="nik">NIK/NRP</label>
+                                <label class="form-label" for="nik">NRP/NIP</label>
                                 <input id="nik" value="{{ old('nik', $user->nik) }}" name="nik"
                                     placeholder="Masukan NIK/NRP" type="text"
                                     class="form-control @error('nik') is-invalid @enderror">

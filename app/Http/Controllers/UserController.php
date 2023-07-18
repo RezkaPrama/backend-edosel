@@ -177,6 +177,17 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $foto_profil = $user->avatar;
+        $directory = 'public/users/';
+        $filePath = $directory . $foto_profil;
+
+        if ($foto_profil) {
+            Storage::delete($filePath);
+        }
+
+        $user->delete();
+
+        return response()->json(['success' => true]);
     }
 }

@@ -33,7 +33,7 @@
                                     @csrf
 
                                     <div class="mb-3">
-                                        <label class="form-label" for="username">Email atau NIK </label>
+                                        <label class="form-label" for="username">Email atau NIK / NRP </label>
                                         <input type="text" name="email" value="{{ old('email') }}"
                                             class="form-control @error('email') is-invalid @enderror" id="email"
                                             placeholder="Enter email">

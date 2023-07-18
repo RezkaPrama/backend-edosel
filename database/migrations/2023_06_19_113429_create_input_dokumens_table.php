@@ -16,11 +16,12 @@ class CreateInputDokumensTable extends Migration
         Schema::create('input_dokumens', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('nik');
+            $table->char('no_dosir', 30);
             $table->string('nama');
             $table->date('tanggal_input');
             $table->string('pangkat');
             $table->string('satuan');
-            $table->string('jenis_karyawan');
+            $table->string('personel');
             $table->bigInteger('shelf_id')->unsigned();
             $table->timestamps();
         });

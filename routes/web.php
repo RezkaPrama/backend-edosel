@@ -42,6 +42,7 @@ Route::prefix('admin')->group(function () {
         //route Input Dokumen
         Route::resource('/dokumen', InputDokumenController::class, ['as' => 'admin']);
         Route::get('/dokumen/exportExcel/{userid}', [InputDokumenController::class, 'exportExcel'])->name('admin.dokumen.exportExcel');
+        Route::delete('/dokumen/{dokumen}/{userid}', [InputDokumenController::class, 'destroy'])->name('admin.dokumen.delete');
 
         //route Input Dokumen
         Route::post('/inputDokumenDetail/upload', [InputDokumenDetailController::class, 'upload'])->name('admin.dokumenDetail.upload');

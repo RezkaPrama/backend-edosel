@@ -31,8 +31,7 @@
                     </div>
 
                     {{-- <label class="col-sm-2 col-form-label">user id</label> --}}
-                    <input id="userid" name="userid" type="hidden" value="{{auth()->user()->id}}"
-                    class="form-control ">
+                    <input id="userid" name="userid" type="hidden" value="{{auth()->user()->id}}" class="form-control ">
 
                     <div class="mb-3 row">
                         <label for="horizontal-firstname-input" class="col-sm-2 col-form-label">Nama</label>
@@ -96,13 +95,14 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center">No.</th>
+                                            <th class="text-center">No Dosir</th>
                                             <th class="text-center">Nama</th>
                                             <th class="text-center">Pangkat</th>
                                             <th class="text-center">NRP</th>
                                             <th class="text-center">No Rak</th>
                                             <th class="text-center">Tanggal Input</th>
                                             <th class="text-center">satuan</th>
-                                            <th class="text-center">Jenis Karyawan</th>
+                                            <th class="text-center">Personel</th>
                                             <th class="text-end">Upload</th>
                                         </tr>
                                     </thead>
@@ -110,6 +110,7 @@
                                         @forelse ($dokumen as $item => $row)
                                         <tr>
                                             <td class="text-center">{{ $item + 1 }}</td>
+                                            <td class="text-center">{{ $row->no_dosir }}</td>
                                             <td class="text-center">{{ $row->nama }}</td>
                                             <td class="text-center">{{ $row->pangkat }}</td>
                                             <td class="text-center">{{ $row->nik }}</td>
@@ -121,7 +122,7 @@
                                                         class="mdi mdi-star me-1"></i>{{ $row->jabatan }}</span></td>
                                             --}}
                                             <td class="text-center">{{ $row->satuan }}</td>
-                                            <td class="text-center">{{ $row->jenis_karyawan }}</td>
+                                            <td class="text-center">{{ $row->personel }}</td>
                                             <td class="text-end">
                                                 <div class="dropdown">
                                                     <a class="btn btn-link text-body shadow-none dropdown-toggle"
@@ -130,9 +131,13 @@
                                                         <i class="bx bx-dots-horizontal-rounded"></i>
                                                     </a>
                                                     <ul class="dropdown-menu dropdown-menu-end">
-                                                        <li><a class="dropdown-item"
+                                                        <li class="text-center"><a class="dropdown-item"
                                                                 href="{{ route('admin.dokumen.edit', $row->id) }}">Edit
                                                                 User</a></li>
+                                                        <li class="text-center">
+                                                            <button class="btn btn-sm btn-danger btn-delete"
+                                                                data-id="{{ $row->id }}" data-user="{{ auth()->user()->id }}">Hapus Dokumen</button>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </td>
@@ -170,6 +175,56 @@
 <script src="{{ URL::asset('assets/js/pages/ecommerce-choices.init.js') }}"></script>
 <script src="{{ asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    
+    $(document).on('click', '.btn-delete', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        var user = $(this).data('user');
+
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Anda yakin ingin menghapus data ini?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                
+                $.ajax({
+                    url: '/admin/dokumen/' + id + '/' + user, 
+                    type: 'DELETE',
+                    dataType: 'json',
+                    data: {
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        Swal.fire(
+                            'Sukses!',
+                            'Data berhasil dihapus.',
+                            'success'
+                        ).then(() => {
+                            
+                            window.location.reload();
+                        });
+                    },
+                    error: function (data) {
+                        
+                        Swal.fire(
+                            'Error!',
+                            'Terjadi kesalahan saat menghapus data.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    });
+</script>
 <script>
     $(document).ready(function() {
 

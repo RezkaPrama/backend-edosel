@@ -50,6 +50,19 @@
                             @method('PUT')
 
                             <div class="mb-3">
+                                <label class="form-label" for="no_dosir">No Dosir</label>
+                                <input id="no_dosir" name="no_dosir" placeholder="Masukan no dosir" type="text"
+                                    value="{{ old('dokumen', $dokumen->no_dosir) }}"
+                                    class="form-control @error('no_dosir') is-invalid @enderror">
+
+                                @error('no_dosir')
+                                <div class="invalid-feedback" style="display: block">
+                                    no_dosir harus terisi
+                                </div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
                                 <label class="form-label" for="nama">Nama</label>
                                 <input id="nama" name="nama" placeholder="Masukan Nama Lengkap" type="text"
                                     value="{{ old('dokumen', $dokumen->nama) }}"
@@ -153,18 +166,17 @@
 
                             <div class="col-md-12">
                                 <div class="mb-3">
-                                    <label for="choices-single-specifications" class="form-label">Jenis
-                                        Karyawan</label>
-                                    <select class="form-control @error('jenis_karyawan') is-invalid @enderror"
-                                        data-trigger name="jenis_karyawan" id="jenis_karyawan">
+                                    <label for="choices-single-specifications" class="form-label">Personel</label>
+                                    <select class="form-control @error('personel') is-invalid @enderror"
+                                        data-trigger name="personel" id="personel">
                                         <option value="">Pilih jenis Karyawan</option>
-                                        <option value="Militer" {{ $dokumen->jenis_karyawan == 'Militer' ? 'selected' : '' }}>Militer</option>
-                                        <option value="PNS" {{ $dokumen->jenis_karyawan == 'PNS' ? 'selected' : '' }}>PNS</option>
+                                        <option value="Militer" {{ $dokumen->personel == 'Militer' ? 'selected' : '' }}>Militer</option>
+                                        <option value="PNS" {{ $dokumen->personel == 'PNS' ? 'selected' : '' }}>PNS</option>
                                     </select>
 
-                                    @error('jenis_karyawan')
+                                    @error('personel')
                                     <div class="invalid-feedback" style="display: block">
-                                        Jenis Karyawan harus terisi
+                                        Personel harus terisi
                                     </div>
                                     @enderror
                                 </div>
@@ -247,13 +259,13 @@
                                         <td class="text-center">{{$item + 1}}</td>
                                         <td class="text-center">{{$row->nama_file}}</td>
                                         <td class="text-center">
-                                            <a href="{{ route('admin.dokumenDetail.download', ['userid' => auth()->user()->id, 'filename' => $row->nama_file ]) }}"
+                                            <a href="{{ route('admin.dokumenDetail.download', ['userid' => $row->users_id, 'filename' => $row->nama_file ]) }}"
                                                 class="btn btn-primary w-sm"><i
                                                     class="bx bx-download me-2"></i>Download</a>
-                                            <a href="{{ route('admin.dokumenDetail.previewPdf', ['userid' => auth()->user()->id, 'filename' => $row->nama_file ]) }}"
+                                            <a href="{{ route('admin.dokumenDetail.previewPdf', ['userid' => $row->users_id, 'filename' => $row->nama_file ]) }}"
                                                 class="btn btn-dark w-sm"><i
                                                     class="bx bxs-file-pdf me-2"></i>Preview</a>
-                                            <a href="{{ route('admin.dokumenDetail.destroy', ['id' => $row->id, 'userid' => auth()->user()->id ]) }}"
+                                            <a href="{{ route('admin.dokumenDetail.destroy', ['id' => $row->id, 'userid' => $row->users_id ]) }}"
                                                 class="btn btn-danger w-sm"><i
                                                     class="bx bxs-eraser-pdf me-2"></i>Hapus</a>
                                         </td>

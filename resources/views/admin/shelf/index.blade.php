@@ -70,15 +70,13 @@
                                                         <i class="bx bx-dots-horizontal-rounded"></i>
                                                     </a>
                                                     <ul class="dropdown-menu dropdown-menu-end">
-                                                        <li><a class="dropdown-item"
+                                                        <li class="text-center"><a class="dropdown-item"
                                                                 href="{{ route('admin.shelf.edit', $row->id) }}">Edit
                                                                 Rak</a></li>
-                                                        {{-- <li>
-                                                            <button id="destroyRak" class="btn btn-sm btn-danger"
-                                                                id="{{ $row->id }}">Hapus</button>
-                                                            <a href="{{ route('admin.shelf.destroy', $row->id) }}"
-                                                                class="btn btn-danger w-sm">Hapus</a>
-                                                        </li> --}}
+                                                        <li class="text-center">
+                                                            <button class="btn btn-sm btn-danger btn-delete"
+                                                                data-id="{{ $row->id }}">Hapus Rak</button>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </td>
@@ -114,6 +112,55 @@
 
 <script src="{{ asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    
+    $(document).on('click', '.btn-delete', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Anda yakin ingin menghapus data ini?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                
+                $.ajax({
+                    url: '/admin/shelf/' + id, 
+                    type: 'DELETE',
+                    dataType: 'json',
+                    data: {
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    success: function (data) {
+                        
+                        Swal.fire(
+                            'Sukses!',
+                            'Data berhasil dihapus.',
+                            'success'
+                        ).then(() => {
+                            
+                            window.location.reload();
+                        });
+                    },
+                    error: function (data) {
+                        
+                        Swal.fire(
+                            'Error!',
+                            'Terjadi kesalahan saat menghapus data.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    });
+</script>
 <script>
     $(document).ready(function() {
         
