@@ -140,26 +140,19 @@ class InputDokumenController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->input('no_dosir_edit'));
         // Validation passed, proceed to save data to the database
-        $this->validate($request, [
-            'nik'                  => 'required',
-            'nama'                 => 'required',
-            'tanggal_input'        => 'required',
-            'pangkat'              => 'required',
-            'satuan'               => 'required',
-            'jenis_karyawan'       => 'required',
-            'shelf_id'             => 'required'
-        ]);
 
         $dokumen = InputDokumen::findOrFail($id);
 
         $dokumen->update([
+            'no_dosir'          => $request->input('no_dosir'),
             'nik'               => $request->input('nik'),
             'nama'              => $request->input('nama'),
             'tanggal_input'     => $request->input('tanggal_input'),
             'pangkat'           => $request->input('pangkat'),
             'satuan'            => $request->input('satuan'),
-            'jenis_karyawan'    => $request->input('jenis_karyawan'),
+            'personel'          => $request->input('personel'),
             'shelf_id'          => $request->input('shelf_id')
         ]);
 
@@ -184,23 +177,30 @@ class InputDokumenController extends Controller
             ->where('input_dokumen_id', '=', $id)
             ->get();
 
-        foreach ($details as $value) {
-            $filename = $value->nama_file;
-            $destinationPath = 'public/uploads'; 
-            $filePath = $destinationPath . '/' . $userid . '/' . $filename;
-
-            if (Storage::exists($filePath)) {
-                Storage::delete($filePath);
+        if ($details) {
+            foreach ($details as $value) {
+                $filename = $value->nama_file;
+                $destinationPath = 'public/uploads'; 
+                $filePath = $destinationPath . '/' . $userid . '/' . $filename;
+    
+                if (Storage::exists($filePath)) {
+                    Storage::delete($filePath);
+                }
             }
+
+            $dokumen->inputDokumenDetail()->delete();
+            $dokumen->delete();
+
+            return response()->json([
+                'success' => true
+            ]);
+        } else {
+            $dokumen->delete();
+
+            return response()->json([
+                'success' => true
+            ]);
         }
-
-        $dokumen->inputDokumenDetail()->delete();
-        $dokumen->delete();
-
-        return response()->json([
-            'success' => true,
-            'data' => $filePath
-        ]);
     }
 
     /**

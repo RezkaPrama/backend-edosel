@@ -15,6 +15,16 @@ class InputDokumen extends Model
      * @var array
      */
     protected $guarded = [];
+    // protected $fillable = [
+    //     'nik',
+    //     'no_dosir',
+    //     'nama',
+    //     'tanggal_input',
+    //     'pangkat',
+    //     'satuan',
+    //     'personel',
+    //     'shelf_id',
+    // ];
 
     /**
      * shelves
